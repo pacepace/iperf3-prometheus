@@ -21,8 +21,8 @@ services:
     volumes:
       - ./nginx.conf:/etc/nginx/nginx.conf
       - ./.htpasswd:/etc/nginx/.htpasswd
-      - /etc/letsencrypt/live/latency.red5.net/fullchain.pem:/etc/letsencrypt/live/latency.red5.net/fullchain.pem
-      - /etc/letsencrypt/live/latency.red5.net/privkey.pem:/etc/letsencrypt/live/latency.red5.net/privkey.pem
+      - /etc/letsencrypt/live/default/fullchain.pem:/etc/letsencrypt/live/default/fullchain.pem
+      - /etc/letsencrypt/live/default/privkey.pem:/etc/letsencrypt/live/default/privkey.pem
       - /etc/letsencrypt/options-ssl-nginx.conf:/etc/letsencrypt/options-ssl-nginx.conf
       - /etc/letsencrypt/ssl-dhparams.pem:/etc/letsencrypt/ssl-dhparams.pem
     depends_on:
