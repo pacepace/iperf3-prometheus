@@ -1,0 +1,22 @@
+# don't let the syntax fool you into thinking it is the same as .gitignore
+__pycache__
+*.pyc
+*.pyo
+*.pyd
+.env*
+.venv
+.classpath
+.dockerignore
+.git
+# exceptions go after the rule
+!.git/HEAD
+!.git/refs/
+.github
+.gitignore
+.vs
+.vscode
+.devcontainer
+docker-compose*
+Dockerfile*
+docs
+iperf3_log.json

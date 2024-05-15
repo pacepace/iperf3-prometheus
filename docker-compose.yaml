@@ -1,0 +1,46 @@
+---
+version: '3.8'
+services:
+  iperf3-prometheus:
+    image: iperf3-prometheus:latest
+    build:
+      context: .
+    networks:
+      - internal
+    ports:
+      - "5201:5201"
+      - "5201:5201/udp"
+    command: ["python", "iperf3-prometheus.py"]
+    restart: unless-stopped
+
+  nginx:
+    image: nginx:latest
+    container_name: nginx
+    ports:
+      - "9090:443"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+      - ./.htpasswd:/etc/nginx/.htpasswd
+      - /etc/letsencrypt/live/latency.red5.net/fullchain.pem:/etc/letsencrypt/live/latency.red5.net/fullchain.pem
+      - /etc/letsencrypt/live/latency.red5.net/privkey.pem:/etc/letsencrypt/live/latency.red5.net/privkey.pem
+      - /etc/letsencrypt/options-ssl-nginx.conf:/etc/letsencrypt/options-ssl-nginx.conf
+      - /etc/letsencrypt/ssl-dhparams.pem:/etc/letsencrypt/ssl-dhparams.pem
+    depends_on:
+      - prometheus
+    networks:
+      - internal
+    restart: unless-stopped
+
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: prometheus
+    networks:
+      - internal
+    volumes:
+      - ./prometheus.yaml:/etc/prometheus/prometheus.yml
+      - ./prometheus_data:/prometheus
+    restart: unless-stopped
+
+networks:
+  internal:
+    driver: bridge
