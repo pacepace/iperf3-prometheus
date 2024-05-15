@@ -20,6 +20,8 @@ To build the docker image, simply start the docker-compose stack with `docker co
 
 Prometheus stats are available from the standard Prometheus port (9090). This can be modified by changing the docker-compose.yaml file.
 
+You must create the local prometheus_data storage directory on the host and this directory must be owned by nobody:nogroup. This is because the Prometheus container runs as the nobody user. You can adjust the location of this directory in the docker-compose.yaml file.
+
 ### Prometheus Basic Auth Protection
 
 Prometheus is fronted with Nginx which provides TLS and Basic Auth protection. A username password combo needs to be set in the .htpasswd file. This file is created with the apache2 `htpasswd` utility.  See the `.htpassword` file for instructions on creating this file.
